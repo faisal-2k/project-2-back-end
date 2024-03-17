@@ -12,8 +12,8 @@ async function getUsers() {
     const options = {
         sort: { "sn": 1 }
      };
-    const db = await connectDB("users");
-    const users = db.collection('all_users');
+    const db = await connectDB("payManagerDB");
+    const users = db.collection('users');
     const usersArray = await users.find(query, options).toArray();    
     return usersArray;
 }
