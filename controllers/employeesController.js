@@ -2,10 +2,10 @@
 const employeeModel = require('../models/employeeModel');
 
 async function createEmployee(req, res) {
-    const { name, email } = req.body;
+    const data = req.body;
 
     try {
-        await employeeModel.createEmployee(name, email);
+        await employeeModel.createEmployee(data);
         res.status(201).send('User created successfully');
     } catch (error) {
         console.error('Error creating user:', error);

@@ -1,10 +1,10 @@
 // EmployeesModel.js
 const connectDB = require('../utils/db');
 
-async function createEmployees(name, email) {  
+async function createEmployee(data) {  
     const db = await connectDB("AlSalam");
     const employeess = db.collection('Employees');
-    return employeess.insertOne({ name, email });
+    return employeess.insertOne(data);
 }
 async function getEmployees() {
     const query = {}; 
@@ -44,4 +44,4 @@ async function updateBalance(employee_id, data) {
 }
 
 
-module.exports = { createEmployees, getEmployee, getEmployees, updateProfile, updateBalance };
+module.exports = { createEmployee, getEmployee, getEmployees, updateProfile, updateBalance };

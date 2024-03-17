@@ -32,8 +32,21 @@ async function getUser(req, res) {
         res.status(500).send('Internal Server Error');
     }
 }
+async function getAvailable(req, res) {
+    console.log("cheking availability");
+    const data = req.body;
+    console.log(req.body);
+    try {
+        const User = await userModel.getAvailable(data);
+        res.status(201).send(user);
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
 async function getManager(req, res) {
-    const email = req.params.email.toLowerCase();
+    const email = req.params.email;
+
     try {
         const users = await userModel.getManager(email);
         res.status(201).send(users);
@@ -44,4 +57,4 @@ async function getManager(req, res) {
 }
 
 
-module.exports = { createUser, getUsers, getUser, getManager };
+module.exports = { createUser, getUsers, getUser, getManager, getAvailable };

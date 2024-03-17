@@ -21,13 +21,20 @@ async function getUser(name) {
     const usersArray = users.find(query).toArray();
     return usersArray;
 }
+async function getAvailable(email) {
+    const query = {email : email};    
+    const db = await connectDB("payManagerDB");
+    const users = db.collection('users');
+    const user = await users.findOne(query);
+    return user;
+}
 async function getManager(email) {
     const query = {email : email};    
     const db = await connectDB("payManagerDB");
     const users = db.collection('users');
     const user = await users.findOne(query);
     if (user?.role === 'manager') {
-        return { isAdmin: true};    
+        return { isManager: true};    
       }
     else {
 
@@ -37,4 +44,4 @@ async function getManager(email) {
 
 
 
-module.exports = { createUser, getUsers, getUser, getManager };
+module.exports = { createUser, getUsers, getUser, getAvailable, getManager };
