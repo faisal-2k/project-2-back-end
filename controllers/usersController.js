@@ -32,30 +32,10 @@ async function getUser(req, res) {
         res.status(500).send('Internal Server Error');
     }
 }
-async function getAdmin(req, res) {
+async function getManager(req, res) {
     const email = req.params.email.toLowerCase();
     try {
-        const users = await userModel.getAdmin(email);
-        res.status(201).send(users);
-    } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).send('Internal Server Error');
-    }
-}
-async function getModerator(req, res) {
-    const email = req.params.email.toLowerCase();
-    try {
-        const users = await userModel.getModerator(email);
-        res.status(201).send(users);
-    } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).send('Internal Server Error');
-    }
-}
-async function getAssistant(req, res) {
-    const email = req.params.email.toLowerCase();
-    try {
-        const users = await userModel.getAssistant(email);
+        const users = await userModel.getManager(email);
         res.status(201).send(users);
     } catch (error) {
         console.error('Error creating user:', error);
@@ -63,4 +43,5 @@ async function getAssistant(req, res) {
     }
 }
 
-module.exports = { createUser, getUsers, getUser, getAdmin, getModerator, getAssistant };
+
+module.exports = { createUser, getUsers, getUser, getManager };

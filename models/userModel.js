@@ -1,17 +1,14 @@
 // userModel.js
 const connectDB = require('../utils/db');
 
-async function createUser(name, email) {
-  
-    const db = await connectDB("users");
-    const users = db.collection('all_users');
+async function createUser(name, email) {  
+    const db = await connectDB("payManagerDB");
+    const users = db.collection('users');
     return users.insertOne({ name, email });
 }
 async function getUsers() {
     const query = {}; 
-    const options = {
-        sort: { "sn": 1 }
-     };
+    const options = {};
     const db = await connectDB("payManagerDB");
     const users = db.collection('users');
     const usersArray = await users.find(query, options).toArray();    
@@ -19,17 +16,17 @@ async function getUsers() {
 }
 async function getUser(name) {
     const query = {name : {$regex :name}};    
-    const db = await connectDB("users");
-    const users = db.collection('all_users');
+    const db = await connectDB("payManagerDB");
+    const users = db.collection('users');
     const usersArray = users.find(query).toArray();
     return usersArray;
 }
-async function getAdmin(email) {
+async function getManager(email) {
     const query = {email : email};    
-    const db = await connectDB("users");
-    const users = db.collection('all_users');
+    const db = await connectDB("payManagerDB");
+    const users = db.collection('users');
     const user = await users.findOne(query);
-    if (user?.role === 'admin') {
+    if (user?.role === 'manager') {
         return { isAdmin: true};    
       }
     else {
@@ -37,32 +34,7 @@ async function getAdmin(email) {
         return usersArray;
     }
 }
-async function getModerator(email) {
-    const query = {email : email};    
-    const db = await connectDB("users");
-    const users = db.collection('all_users');
-    const user = await users.findOne(query);
-    if (user?.role2 === 'moderator') {
-        return { isAdmin: true};    
-      }
-    else {
-
-        return usersArray;
-    }
-}
-async function getAssistant(email) {
-    const query = {email : email};    
-    const db = await connectDB("users");
-    const users = db.collection('all_users');
-    const user = await users.findOne(query);
-    if (user?.role3 === 'assistant') {
-        return { isAssistant: true};    
-      }
-    else {
-
-        return usersArray;
-    }
-}
 
 
-module.exports = { createUser, getUsers, getUser, getAdmin, getModerator, getAssistant };
+
+module.exports = { createUser, getUsers, getUser, getManager };

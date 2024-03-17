@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require("cors");
 const usersRouter = require('./routes/users');
+const employeesRouter = require('./routes/employees');
 
 
 const app = express();
@@ -10,10 +11,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', usersRouter);
+app.use('/employees', employeesRouter);
 
 
 app.get("/", (req, res) => {
-    res.send("welcome to Pay Manager");
+    res.send("Welcome To Pay Manager");
     });
 
 app.listen(port, () => {
