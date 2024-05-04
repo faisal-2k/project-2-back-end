@@ -3,7 +3,7 @@ const cors = require("cors");
 const usersRouter = require('./routes/users');
 const employeesRouter = require('./routes/employees');
 
-
+require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 

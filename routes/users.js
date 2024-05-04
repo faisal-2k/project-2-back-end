@@ -2,8 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
+const { verifyUserToken, setToken } = require('../middlewares/verifyToken');
 
-router.post('/create', usersController.createUser);
+router.get('/request_token', setToken);
+router.post('/create',  usersController.createUser);
 router.get('/check-email', usersController.getAvailable);
 
 router.get('/ismanager/:email', usersController.getManager);
