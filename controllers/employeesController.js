@@ -74,7 +74,7 @@ async function removeEmployee(req, res) {
 }
 async function updateProfile(req, res) {
     const employee_id = parseInt(req.params.employee_id);
-    const data = req.body.data;
+    const data = req.body;
     try {
         const employees = await employeeModel.updateProfile(employee_id, data);
         res.status(201).send(employees);
@@ -85,7 +85,7 @@ async function updateProfile(req, res) {
 }
 async function updateBalance(req, res) {
     const employee_id = parseInt(req.params.employee_id);
-    const data = req.body.data;
+    const data = req.body;
     try {
         const employees = await employeeModel.updateBalance(employee_id, data);
         res.status(201).send(employees);
