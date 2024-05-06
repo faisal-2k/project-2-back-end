@@ -26,8 +26,8 @@ async function updateUser(data) {
     const updateDocument = {
         $set :  data,
       } 
-    const db = await connectDB("AlSalam");
-    const users = db.collection(`Employees`);
+    const db = await connectDB("payManagerDB");
+    const users = db.collection(`users`);
     const result = await users.updateOne(filter, updateDocument);      
     return result;
 }
