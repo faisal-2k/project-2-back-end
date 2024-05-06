@@ -56,4 +56,4 @@ async function getManager(email) {
 
 
 
-module.exports = { createUser, getUsers, getUser, updateUser, getAvailable: findUser, getManager };
+module.exports = { createUser, getUsers, getUser, updateUser, findUser, getManager };

@@ -73,4 +73,4 @@ async function getManager(req, res) {
 }
 
 
-module.exports = { createUser, getUsers, getUser, updateUser, getManager, getAvailable: findUser };
+module.exports = { createUser, getUsers, getUser, updateUser, getManager };
