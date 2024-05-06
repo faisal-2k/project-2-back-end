@@ -1,10 +1,10 @@
 // userModel.js
 const connectDB = require('../utils/db');
 
-async function createUser(name, email) {  
+async function createUser(data) {  
     const db = await connectDB("payManagerDB");
     const users = db.collection('users');
-    return users.insertOne({ name, email });
+    return users.insertOne(data);
 }
 async function getUsers() {
     const query = {}; 
@@ -18,8 +18,18 @@ async function getUser(name) {
     const query = {name : {$regex :name}};    
     const db = await connectDB("payManagerDB");
     const users = db.collection('users');
-    const usersArray = users.find(query).toArray();
-    return usersArray;
+    const user = users.findOne(query);
+    return user;
+}
+async function updateUser(data) {
+    const filter = {email : data.email}; 
+    const updateDocument = {
+        $set :  data,
+      } 
+    const db = await connectDB("AlSalam");
+    const users = db.collection(`Employees`);
+    const result = await users.updateOne(filter, updateDocument);      
+    return result;
 }
 async function getAvailable(email) {
     const query = {email : email};    
@@ -44,4 +54,4 @@ async function getManager(email) {
 
 
 
-module.exports = { createUser, getUsers, getUser, getAvailable, getManager };
+module.exports = { createUser, getUsers, getUser, updateUser, getAvailable, getManager };

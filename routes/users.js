@@ -6,11 +6,12 @@ const { verifyUserToken, setToken } = require('../middlewares/verifyToken');
 
 router.get('/request_token', setToken);
 router.post('/create',  usersController.createUser);
-router.get('/check-email', usersController.getAvailable);
+router.put('/update_user',  usersController.updateUser);
+router.get('/check_email', usersController.getAvailable);
 
 router.get('/ismanager/:email', usersController.getManager);
-router.get('/:name', usersController.getUser);
 router.get('/', usersController.getUsers);
+router.get('/:name', usersController.getUser);
 
 
 module.exports = router;

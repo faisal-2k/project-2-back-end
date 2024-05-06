@@ -1,17 +1,36 @@
 // employeesController.js
 const employeeModel = require('../models/employeeModel');
 
-async function createEmployee(req, res) {
-    const data = req.body;
-
+async function getCount(req, res) {
+    // const company = req.params.company;
     try {
-        await employeeModel.createEmployee(data);
-        res.status(201).send('User created successfully');
+        const result = await employeeModel.getCount();
+        res.status(200).json({'success' : true, 'result': result})
     } catch (error) {
         console.error('Error creating user:', error);
         res.status(500).send('Internal Server Error');
     }
 }
+
+async function createEmployee(req, res) {
+    const data = req.body;
+    const email = data.email;
+    try {
+        // Checking
+        const existingEmployee = await employeeModel.findEmployee(email);
+        if (existingEmployee) {
+            return res.status(400).send('Employee already exists!');
+        }
+
+        //creating
+        await employeeModel.createEmployee(data);
+        res.status(201).send('Employee created successfully');
+    } catch (error) {
+        console.error('Error creating employee:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
 async function getEmployees(req, res) {
     try {
         const employees = await employeeModel.getEmployees();
@@ -26,6 +45,27 @@ async function getEmployee(req, res) {
 
     try {
         const employee = await employeeModel.getEmployee(name);
+        res.status(201).send(employee);
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+async function findEmployee(req, res) {
+    const email = req.params.email;
+    try {
+        const employee = await employeeModel.findEmployee(email);
+        res.status(201).send(employee);
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+async function removeEmployee(req, res) {
+    const email = req.params.email;
+    console.log("i'm removing");    
+    try {
+        const employee = await employeeModel.removeEmployee(email);        
         res.status(201).send(employee);
     } catch (error) {
         console.error('Error creating user:', error);
@@ -56,4 +96,4 @@ async function updateBalance(req, res) {
 }
 
 
-module.exports = { createEmployee, getEmployees, getEmployee, updateProfile, updateBalance };
+module.exports = { getCount, createEmployee, getEmployees, findEmployee,  getEmployee, removeEmployee, updateProfile, updateBalance };
