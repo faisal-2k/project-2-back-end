@@ -31,7 +31,9 @@ async function updateUser(data) {
     const result = await users.updateOne(filter, updateDocument);      
     return result;
 }
-async function getAvailable(email) {
+
+
+async function findUser(email) {
     const query = {email : email};    
     const db = await connectDB("payManagerDB");
     const users = db.collection('users');
@@ -54,4 +56,4 @@ async function getManager(email) {
 
 
 
-module.exports = { createUser, getUsers, getUser, updateUser, getAvailable, getManager };
+module.exports = { createUser, getUsers, getUser, updateUser, getAvailable: findUser, getManager };

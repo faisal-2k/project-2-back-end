@@ -3,14 +3,30 @@ const userModel = require('../models/userModel');
 
 async function createUser(req, res) {
     const data = req.body;
+    const email = data.email;
 
     try {
+        // Checking
+        const existingEmployee = await userModel.findUser(email);
+        if (existingEmployee) {
+            return res.status(400).send('Employee already exists!');
+        }
+
+        //creating
         await userModel.createUser(data);
         res.status(201).send('User created successfully');
     } catch (error) {
-        console.error('Error creating user:', error);
+        console.error('Error creating employee:', error);
         res.status(500).send('Internal Server Error');
     }
+
+    // try {
+    //     await userModel.createUser(data);
+    //     res.status(201).send('User created successfully');
+    // } catch (error) {
+    //     console.error('Error creating user:', error);
+    //     res.status(500).send('Internal Server Error');
+    // }
 }
 async function getUsers(req, res) {
     try {
@@ -43,17 +59,7 @@ async function updateUser(req, res) {
         res.status(500).send('Internal Server Error');
     }
 }
-async function getAvailable(req, res) {
-    console.log("cheking availability");
-    const data = req.body;
-    try {
-        const user = await userModel.getAvailable(data);
-        res.status(201).send(user);
-    } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).send('Internal Server Error');
-    }
-}
+
 async function getManager(req, res) {
     const email = req.params.email;
 
@@ -67,4 +73,4 @@ async function getManager(req, res) {
 }
 
 
-module.exports = { createUser, getUsers, getUser, updateUser, getManager, getAvailable };
+module.exports = { createUser, getUsers, getUser, updateUser, getManager, getAvailable: findUser };
